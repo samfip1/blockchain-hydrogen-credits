@@ -41,7 +41,7 @@ router.post("/", async (req: Request<{}, {}, SignupRequestBody>, res: Response) 
     const { name, email, password, stateName, city , bank } = req.body;
 
     if (!name || !email || !password || !stateName || !city || !bank) {
-        return res.status(400).json({ error: "Name, email, password, state, and city are required." });
+        return res.status(400).json({ error: "Name, email, password, state, bank and city are required." });
     }
 
     const bankNames = ["HDFC Bank", "ICICI Bank", "State Bank of India", "Punjab National Bank", "Axis Bank", "Kotak Mahindra Bank", "Bank of Baroda", "Union Bank of India", "Canara Bank", "IndusInd Bank"];
@@ -101,7 +101,7 @@ router.post("/", async (req: Request<{}, {}, SignupRequestBody>, res: Response) 
             });
 
             return company;
-        });
+        }, { timeout: 7000 });
 
         const token = jwt.sign({ companyId: newCompany.id, email: newCompany.email }, SECRET_KEY, { expiresIn: "1h" });
 

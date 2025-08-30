@@ -17,7 +17,7 @@ datasource db {
 model Company {
     id        String   @id @default(uuid())
     name      String   @unique
-    state_name String   // no relation
+    state_name String
     city      String?
     plants    Plant[]
     claims    Claim[]
@@ -43,7 +43,7 @@ model Claim {
     company          Company      @relation(fields: [companyId], references: [id])
     plantId          String
     plant            Plant        @relation(fields: [plantId], references: [id])
-    milestone        String
+    milestone        Int
     subsidyType      SubsidyType
     productionFrom   DateTime
     productionTo     DateTime

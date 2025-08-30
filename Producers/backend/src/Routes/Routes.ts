@@ -12,7 +12,7 @@ const router = express.Router();
 import add_plants from "../services/add_plant.js"
 import Signin from "../controller/Signin/Signin.js"
 import Signup from "../controller/Signup/Signup.js"
-
+import apply from "../services/Claim.js"
 router.use("/Signin", Signin);
 router.use("/SignUp", Signup);
 
@@ -20,7 +20,8 @@ router.use("/SignUp", Signup);
 
 
 const services = {
-    add_plants
+    add_plants,
+    apply
 };
 
 

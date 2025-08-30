@@ -37,7 +37,7 @@ const generateFakeAccountDetails = () => {
         };
 };
 
-router.post("/signup", async (req: Request<{}, {}, SignupRequestBody>, res: Response) => {
+router.post("/", async (req: Request<{}, {}, SignupRequestBody>, res: Response) => {
     const { name, email, password, stateName, city , bank } = req.body;
 
     if (!name || !email || !password || !stateName || !city || !bank) {

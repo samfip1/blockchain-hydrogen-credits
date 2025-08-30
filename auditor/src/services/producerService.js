@@ -1,8 +1,8 @@
 const { getProducerById } = require('../models/Producer');
 
-async function checkProducerLicense(producerId) {
+async function checkProducerLicense(plantId) {
   try {
-    const producer = await getProducerById(producerId);
+    const producer = await getProducerById(plantId);
     
     if (!producer) {
       throw new Error('Producer not found');

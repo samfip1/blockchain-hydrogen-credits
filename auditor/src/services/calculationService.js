@@ -4,7 +4,7 @@ function calculateEfficiency(dailyData) {
   }
 
   let totalEfficiency = 0;
-  
+  // console.log(dailyData);
   dailyData.forEach(day => {
     // Formula: efficiency = (H2_kg * 39.4) / energy_kwh * 100
     const dailyEfficiency = (day.h2_production * 39.4) / day.energy_used * 100;

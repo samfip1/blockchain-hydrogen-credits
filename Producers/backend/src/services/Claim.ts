@@ -28,7 +28,7 @@ router.post("/claim", async (req, res) => {
         data: {
           companyId: summary.companyId,
           plantId: summary.plantId,
-          milestone: summary.milestone,
+        milestone: summary.milestone,
           subsidyType: "OPEX",
           productionFrom: new Date(),
           productionTo: new Date(),
@@ -41,7 +41,7 @@ router.post("/claim", async (req, res) => {
       createdClaims.push(claim);
     }
 
-    const auditorApiUrl = process.env.AUDITOR_API_URL || "https://auditor.example.com/submit";
+    const auditorApiUrl = process.env.AUDITOR_API_URL || "http://localhost:4000/submit";
     const response = await axios.post(
       auditorApiUrl,
       { data: summaries },

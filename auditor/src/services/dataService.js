@@ -1,9 +1,9 @@
 const { fetchFromThirdParty } = require('../config/thirdPartyApi');
 
-async function fetchMonthlyData(producerId) {
+async function fetchMonthlyData(plantId) {
   try {
     // Fetch daily data from third-party API/database
-    const dailyData = await fetchFromThirdParty(producerId);
+    const dailyData = await fetchFromThirdParty(plantId);
     
     if (!dailyData || dailyData.length === 0) {
       throw new Error('No production data found');

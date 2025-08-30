@@ -105,6 +105,7 @@ model Account {
     createdAt         DateTime @default(now())
 }
 
+
 model Payout {
     id         String   @id @default(uuid())
     claimId    String   @unique

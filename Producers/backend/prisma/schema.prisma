@@ -1,0 +1,141 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+    provider = "prisma-client-js"
+    output   = "../src/generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Company {
+    id        String   @id @default(uuid())
+    name      String   @unique
+    state_name String   // no relation
+    city      String?
+    plants    Plant[]
+    claims    Claim[]
+    accounts  Account[]
+    email     String   @unique
+    password  String
+}
+
+model Plant {
+    id        String  @id @default(uuid())
+    companyId String
+    company   Company @relation(fields: [companyId], references: [id])
+    name      String
+    stateName String  
+    city      String?
+    claims    Claim[]
+}
+
+
+model Claim {
+    id               String       @id @default(uuid())
+    companyId        String
+    company          Company      @relation(fields: [companyId], references: [id])
+    plantId          String
+    plant            Plant        @relation(fields: [plantId], references: [id])
+    milestone        String
+    subsidyType      SubsidyType
+    productionFrom   DateTime
+    productionTo     DateTime
+    hydrogenProduced Float
+    energySource     EnergySource
+    energyConsumed   Float
+    iotLogs          Json?
+    status           ClaimStatus  @default(PENDING)
+    payout           Payout?
+    history          ClaimHistory[]
+    createdAt        DateTime     @default(now())
+    updatedAt        DateTime     @updatedAt
+}
+
+enum SubsidyType {
+    CAPEX
+    OPEX
+}
+
+enum EnergySource {
+    SOLAR
+    WIND
+    HYDRO
+}
+
+enum ClaimStatus {
+    PENDING
+    APPROVED
+    REJECTED
+}
+
+model ClaimHistory {
+    id        String     @id @default(uuid())
+    claimId   String
+    claim     Claim      @relation(fields: [claimId], references: [id])
+    stage     ClaimStage
+    decision  Boolean? 
+    remarks   String?
+    createdAt DateTime   @default(now())
+}
+
+enum ClaimStage {
+    PRODUCER_SUBMITTED
+    AUDITOR_VERIFIED
+    GOV_APPROVED
+    SUBSIDY_RELEASED
+}
+
+model Account {
+    id                String   @id @default(uuid())
+    companyId         String
+    company           Company  @relation(fields: [companyId], references: [id])
+    accountHolderName String
+    bankName          String
+    accountNumber     String
+    ifscCode          String
+    accountType       String   @default("SAVINGS")
+    payouts           Payout[] @relation("AccountPayout")
+    createdAt         DateTime @default(now())
+}
+
+model Payout {
+    id         String   @id @default(uuid())
+    claimId    String   @unique
+    claim      Claim    @relation(fields: [claimId], references: [id])
+    amount     Float
+    releasedAt DateTime @default(now())
+    accountId  String?
+    account    Account? @relation("AccountPayout", fields: [accountId], references: [id])
+}
+
+model Notification {
+    id        String           @id @default(uuid())
+    claimId   String?
+    message   String
+    type      NotificationType
+    isRead    Boolean          @default(false)
+    createdAt DateTime         @default(now())
+}
+
+enum NotificationType {
+    CLAIM_APPROVED
+    CLAIM_REJECTED
+    SUBSIDY_RELEASED
+}
+
+model ClaimYearLock {
+    id          String      @id @default(uuid())
+    plantId     String
+    year        Int
+    subsidyType SubsidyType
+    createdAt   DateTime    @default(now())
+    @@unique([plantId, year, subsidyType])
+}
+

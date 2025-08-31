@@ -1,0 +1,828 @@
+[
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "projectId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "verifiedValue",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "cid",
+				"type": "string"
+			}
+		],
+		"name": "AuditorManualVerified",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "projectId",
+				"type": "uint256"
+			}
+		],
+		"name": "EligibilitySet",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "projectId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "producer",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "scheme",
+				"type": "string"
+			}
+		],
+		"name": "ProjectRegistered",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "sensorId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "projectId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "source",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "cid",
+				"type": "string"
+			}
+		],
+		"name": "SensorDataSubmitted",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "sensorId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "projectId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "verifiedValue",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amountINR",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amountETHWei",
+				"type": "uint256"
+			}
+		],
+		"name": "SensorDataVerified",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "acct",
+				"type": "address"
+			}
+		],
+		"name": "addAuditor",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "acct",
+				"type": "address"
+			}
+		],
+		"name": "addOracle",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_projectId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_verifiedValueScaled",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_ipfsHash",
+				"type": "string"
+			}
+		],
+		"name": "auditorManualVerify",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "amountINRScaled",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amountETHWei",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "auditors",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_projectId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_rateINRScaled",
+				"type": "uint256"
+			}
+		],
+		"name": "computeSubsidyForProject",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "amountINRScaled",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amountETHWei",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "criteria",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "maxCarbonIntensity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "renewableSourceRequired",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "minLVAPercent",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "equipmentApproved",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "ethInrRate",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_projectId",
+				"type": "uint256"
+			}
+		],
+		"name": "getProject",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "producer",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "state",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "scheme",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "milestoneTarget",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "exists",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "eligible",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "achieved",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lastVerifiedValue",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "lastReportCID",
+						"type": "string"
+					}
+				],
+				"internalType": "struct GreenHydrogenSimulator.Project",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_sensorId",
+				"type": "uint256"
+			}
+		],
+		"name": "getSensor",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "projectId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "hydrogenProduced",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "carbonIntensity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "renewablePercentage",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "source",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "ipfsReportCid",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "usedForVerification",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct GreenHydrogenSimulator.SensorData",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "nationalSchemeById",
+		"outputs": [
+			{
+				"internalType": "enum GreenHydrogenSimulator.SubsidyType",
+				"name": "subsidyType",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "rate",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "durationYears",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "active",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "oracles",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "projectCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "projects",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "producer",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "state",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "scheme",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "milestoneTarget",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "exists",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "eligible",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "achieved",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lastVerifiedValue",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "lastReportCID",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_producer",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_state",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_scheme",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_milestoneTargetScaled",
+				"type": "uint256"
+			}
+		],
+		"name": "registerProject",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "acct",
+				"type": "address"
+			}
+		],
+		"name": "removeAuditor",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "acct",
+				"type": "address"
+			}
+		],
+		"name": "removeOracle",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "sensorCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "sensorData",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "projectId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "hydrogenProduced",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "carbonIntensity",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "renewablePercentage",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "source",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "ipfsReportCid",
+				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "usedForVerification",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_projectId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_maxCarbonIntensityScaled",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "_renewableSourceRequired",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_minLVAPercent",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "_equipmentApproved",
+				"type": "bool"
+			}
+		],
+		"name": "setEligibilityCriteria",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_rateScaled",
+				"type": "uint256"
+			}
+		],
+		"name": "setEthInrRate",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_projectId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_hydrogenProducedScaled",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_carbonIntensityScaled",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_renewablePercentage",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_source",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_ipfsReportCid",
+				"type": "string"
+			}
+		],
+		"name": "submitSensorData",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_sensorId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_subsidyRateINRScaled",
+				"type": "uint256"
+			}
+		],
+		"name": "verifySensorDataByOracle",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "amountINRScaled",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amountETHWei",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"stateMutability": "payable",
+		"type": "receive"
+	}
+]

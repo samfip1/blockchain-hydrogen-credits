@@ -1,0 +1,22 @@
+{
+  "name": "subsidy-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node src/index.js",
+    "start": "node src/index.js",
+    "script:register": "node scripts/registerProject.js",
+    "script:eligibility": "node scripts/setEligibility.js",
+    "script:sensor": "node scripts/submitSensor.js",
+    "script:verify": "node scripts/verifySensor.js",
+    "script:subsidy": "node scripts/computeSubsidy.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.2",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0"
+  }
+}

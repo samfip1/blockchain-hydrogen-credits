@@ -116,20 +116,6 @@ model Payout {
     account    Account? @relation("AccountPayout", fields: [accountId], references: [id])
 }
 
-model Notification {
-    id        String           @id @default(uuid())
-    claimId   String?
-    message   String
-    type      NotificationType
-    isRead    Boolean          @default(false)
-    createdAt DateTime         @default(now())
-}
-
-enum NotificationType {
-    CLAIM_APPROVED
-    CLAIM_REJECTED
-    SUBSIDY_RELEASED
-}
 
 model ClaimYearLock {
     id          String      @id @default(uuid())

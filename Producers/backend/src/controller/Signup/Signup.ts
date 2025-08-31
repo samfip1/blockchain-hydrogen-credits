@@ -38,6 +38,8 @@ const generateFakeAccountDetails = () => {
 };
 
 router.post("/", async (req: Request<{}, {}, SignupRequestBody>, res: Response) => {
+
+    let ans: boolean = true;
     const { name, email, password, stateName, city , bank } = req.body;
 
     if (!name || !email || !password || !stateName || !city || !bank) {
@@ -87,9 +89,6 @@ router.post("/", async (req: Request<{}, {}, SignupRequestBody>, res: Response) 
                     company: { connect: { id: company.id } },
                 },
             });
-
-
-
             await tx.account.create({
                 data: {
                     companyId: company.id,
@@ -102,7 +101,6 @@ router.post("/", async (req: Request<{}, {}, SignupRequestBody>, res: Response) 
 
             return company;
         }, { timeout: 7000 });
-
         const token = jwt.sign({ companyId: newCompany.id, email: newCompany.email }, SECRET_KEY, { expiresIn: "1h" });
 
         res.cookie("token", token, {
